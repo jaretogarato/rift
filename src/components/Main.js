@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Dimmer, Loader, Image, Segment, TextArea, Grid } from 'semantic-ui-react';
 import '../css/Style.css';
 import { stateToHTML } from 'draft-js-export-html';
+import { stateToMarkdown } from 'draft-js-export-markdown';
 import { rawContent } from '../extras/rawContent';
 import GetCurrentlySelectedBlock from './GetCurrentlySelectedBlock';
 // import createHashtagPlugin from 'draft-js-hashtag-plugin';
@@ -62,15 +63,6 @@ class Main extends React.Component {
     loaded: false,
   };
 
-  // xx2
-  // state = {
-  //   editorState: EditorState.createWithContent(
-  //     ContentState.createFromBlockArray(rawContent.blocks),
-  //     // decorator
-  //   ),
-  //   loaded: false,
-  // };
-
   componentWillMount () {
     this.setState({ editorState: editorStateDefault, loaded: false });
     console.log("cwm: editorStateDefault: ", editorStateDefault);
@@ -84,7 +76,7 @@ class Main extends React.Component {
 
   onChange = (editorState) => {
     this.setState({ editorState });
-    // console.log(stateToHTML(this.state.editorState.getCurrentContent()));
+    console.log(stateToHTML(this.state.editorState.getCurrentContent()));
   }
 
   // handleKeyCommand(command, editorState) {
@@ -136,7 +128,7 @@ class Main extends React.Component {
   _onAlignLeftClick() {
     this.onChange(RichUtils.toggleInlineStyle(
       this.state.editorState,
-      'ALIGN_LEFT'
+      'LEFT'
     ));
   }
 
@@ -152,7 +144,7 @@ class Main extends React.Component {
                 <button onClick={this._onItalicClick.bind(this)}>Italic</button>
                 <button onClick={this._onULClick.bind(this)}>UL</button>
                 <button onClick={this._onOLClick.bind(this)}>OL</button>
-                {/* <button onClick={this._onAlignLeftClick.bind(this)}>AlignLeft</button> */}
+                <button onClick={this._onAlignLeftClick.bind(this)}>Left</button>
                 <input
                   onClick={this.logState}
                   style={styles.button}
@@ -174,7 +166,7 @@ class Main extends React.Component {
                       handleKeyCommand={this.handleKeyCommand}
                       keyBindingFn={myKeyBindingFn}
                       blockStyleFn={getBlockStyle}
-                      placeholder="Click in center of this field just under this line to start."
+                      placeholder="Click in center of this field just under this line to start. So picky!"
                       width="100%"
                       ref={this.setDomEditorRef}
                       plugins={[linkifyPlugin, emojiPlugin]}
@@ -203,13 +195,13 @@ class Main extends React.Component {
               <Grid.Column>
                 <h3>Features</h3>
                 <ul className="UlNoBullet">
-                  <li>Hyperlinks automatically get styling</li>
+                  <li>Anything looking like a link is recognized and styled</li>
                 </ul>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row columns={2}>
               <Grid.Column>
-                <h1>Markdown</h1>
+                <h1>ContentState</h1>
               </Grid.Column>
               <Grid.Column>
                 <h1>Rendered</h1>
@@ -220,7 +212,8 @@ class Main extends React.Component {
                 <TextArea
                   placeholder='Tell us more'
                   style={styles.textWindow}
-                  // value={stateToHTML(this.state.editorState.getCurrentContent())}
+                  // value={stateToMarkdown(this.state.editorState.getCurrentContent())}
+                  value={this.state.editorState.getCurrentContent()}
                 />
               </Grid.Column>
               <Grid.Column>
