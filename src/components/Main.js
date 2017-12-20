@@ -1,9 +1,9 @@
 import React from 'react';
-import { Container, Dimmer, Loader, Image, Segment, TextArea, Grid } from 'semantic-ui-react';
+import { Container, Dimmer, Loader, Image, Segment, TextArea, Grid, Button } from 'semantic-ui-react';
 import '../css/Style.css';
 import { stateToHTML } from 'draft-js-export-html';
-import { stateToMarkdown } from 'draft-js-export-markdown';
-import { rawContent } from '../extras/rawContent';
+// import { stateToMarkdown } from 'draft-js-export-markdown';
+// import { rawContent } from '../extras/rawContent';
 import GetCurrentlySelectedBlock from './GetCurrentlySelectedBlock';
 // import createHashtagPlugin from 'draft-js-hashtag-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
@@ -140,17 +140,11 @@ class Main extends React.Component {
             <Grid.Row columns={2}>
               <Grid.Column>
                 <h1>Rich Text</h1>
-                <button onClick={this._onBoldClick.bind(this)}>Bold</button>
-                <button onClick={this._onItalicClick.bind(this)}>Italic</button>
-                <button onClick={this._onULClick.bind(this)}>UL</button>
-                <button onClick={this._onOLClick.bind(this)}>OL</button>
-                <button onClick={this._onAlignLeftClick.bind(this)}>Left</button>
-                <input
-                  onClick={this.logState}
-                  style={styles.button}
-                  type="button"
-                  value="Log State"
-                />
+                <Button onClick={this._onBoldClick.bind(this)}>Bold</Button>
+                <Button onClick={this._onItalicClick.bind(this)}>Italic</Button>
+                <Button onClick={this._onULClick.bind(this)}>UL</Button>
+                <Button onClick={this._onOLClick.bind(this)}>OL</Button>
+                <Button onClick={this._onAlignLeftClick.bind(this)}>Left</Button>
               </Grid.Column>
               <Grid.Column>
                 <h1>HTML</h1>
@@ -186,6 +180,8 @@ class Main extends React.Component {
               <Grid.Column>
                 <EmojiSuggestions />
                 <EmojiSelect />
+                
+                <Button onClick={this.logState}>Log State</Button>
               </Grid.Column>
               <Grid.Column>
                 <p> </p>
@@ -204,7 +200,7 @@ class Main extends React.Component {
                 <h1>ContentState</h1>
               </Grid.Column>
               <Grid.Column>
-                <h1>Rendered</h1>
+                <h1>Raw</h1>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row columns={2}>
@@ -221,7 +217,9 @@ class Main extends React.Component {
                   placeholder='Tell us more'
                   style={styles.textWindow}
                   // value={stateToHTML(this.state.editorState.getCurrentContent())}
+                  // value={convertToRaw(this.state.contentState.getCurrentContent())}
                 />
+
               </Grid.Column>
             </Grid.Row>
 
